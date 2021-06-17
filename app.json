@@ -23,6 +23,15 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
+      },
+      "splash":{
+        "ldpi":"./assets/img/splash-screens/LDPI_screen.png",
+        "mdpi":"./assets/img/splash-screens/MDPI_screen.png",
+        "hdpi":"./assets/img/splash-screens/HDPI_screen.png",
+        "xhdpi":"./assets/img/splash-screens/XHDPI_screen.png",
+        "xxhdpi":"./assets/img/splash-screens/XXHDPI_screen.png",
+        "xxxhdpi":"./assets/img/splash-screens/XXXHDPI_screen.png",
+        "resizeMode": "cover"
       }
     },
     "web": {
