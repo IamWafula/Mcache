@@ -1,6 +1,7 @@
 import * as firebase from "firebase"
 import "firebase/auth"
 import "firebase/firestore"
+import "firebase/storage"
 
 
 const firebaseConfig = {
@@ -9,7 +10,8 @@ const firebaseConfig = {
     projectId: "mcache-proto-one",
     storageBucket: "mcache-proto-one.appspot.com",
     messagingSenderId: "372836497819",
-    appId: "1:372836497819:web:acf0e1ee010df5df6b493e"
+    appId: "1:372836497819:web:acf0e1ee010df5df6b493e",
+    storageBucket: "gs://mcache-proto-one.appspot.com"
   };
 
 let app;
@@ -21,6 +23,8 @@ if(firebase.apps.length === 0){
 
 const db = app.firestore();
 const auth = firebase.auth()
+const storage = firebase.storage();
+const storageRef = storage.ref()
 
 
-export {db, auth}
+export {db, auth, storageRef}

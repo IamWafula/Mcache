@@ -3,6 +3,7 @@ import { SafeAreaView, StyleSheet, Text, View, Image, Pressable, ScrollView } fr
 import { Avatar } from 'react-native-paper';
 import { AntDesign } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons'; 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { auth, db } from '../firebase';
 
@@ -63,12 +64,14 @@ const CardsDisplay = ({navigation, route}) => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={{marginBottom: 20, alignItems:"center", justifyContent:"center"}}>
-                <Avatar.Image rounded size={50} source={{uri: "https://variety.com/wp-content/uploads/2020/07/huc-ff-000185.jpg"}} />
+            <Ionicons name="person-outline" size={50} color="#ff6600" />
                 <Text style={{color: "#6400ff", fontSize: 20, textAlign: "center"}}> {route.params.card.fullName} </Text>
                 <Text style={{color: "gray", fontSize: 18, textAlign:"center"}}> Student at {route.params.card.Institution}</Text>
             </View>
             <View style={styles.card}>
-            <Image source={{uri: "https://banner2.cleanpng.com/20180812/gcv/kisspng-mastercard-foundation-logo-vector-graphics-yttyouth-engagement-self-assessment-tool-survey-5b6fec07b57060.2687662215340615757432.jpg"}} style={{width: 60, height:60, marginRight: 10}}/>
+            {route.params.card.provider == "MasterCard" && <Image source={{uri: "https://banner2.cleanpng.com/20180812/gcv/kisspng-mastercard-foundation-logo-vector-graphics-yttyouth-engagement-self-assessment-tool-survey-5b6fec07b57060.2687662215340615757432.jpg"}} style={{width: 60, height:60, marginRight: 10}}/>}
+            {route.params.card.provider == "Visa" && <Image source={{uri: "https://banner2.cleanpng.com/20180705/auy/kisspng-visa-debit-card-credit-card-logo-mastercard-supermercado-5b3daa406f9d67.4063706315307679364572.jpg"}} style={{width: 80, height:60, marginRight: 10}}/>}
+            
                 <View>
                     <View style={styles.dataRow}>
                         <Text style={styles.key}>Balance: </Text>

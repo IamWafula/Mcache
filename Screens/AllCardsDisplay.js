@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, Text, View, Image, Pressable} from 'react-native'
 import { Avatar } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { Ionicons } from '@expo/vector-icons'; 
 import { auth, db } from '../firebase'
 
 const AllCardsDisplay = ({navigation}) => {
@@ -55,17 +56,21 @@ const AllCardsDisplay = ({navigation}) => {
 
     const card = (cardData, i)=>{
         if(cardData){return(
-            <Pressable key={i} onPress={()=>toCard(cardData, i)} style={styles.card}>
-                        <View style={{ flexDirection:"row", alignItems: "center", justifyContent:"space-around" }} >
+            <Pressable key={i} onPress={()=>toCard(cardData, i)} style={{width: 300, height: 200, borderRadius: 20, borderColor: `${cardData.provider == "MasterCard" ? "#ff6600" :"#6400ff"}`, borderWidth: 0.5, marginLeft: 30, display: "flex", padding: 10}}>
+                        {cardData.provider == "MasterCard" && <View style={{ flexDirection:"row", alignItems: "center", justifyContent:"space-around" }} >
                             <Image source={{uri: "https://banner2.cleanpng.com/20180812/gcv/kisspng-mastercard-foundation-logo-vector-graphics-yttyouth-engagement-self-assessment-tool-survey-5b6fec07b57060.2687662215340615757432.jpg"}} style={{width: 60, height:60}}/>
                             <Text style={{color:"#6400ff", fontSize:18, fontWeight:"800"}}> {cardData.Number} </Text>
-                        </View>
+                        </View>}
+                        {cardData.provider == "Visa" && <View style={{ flexDirection:"row", alignItems: "center", justifyContent:"space-around" }} >
+                            <Image source={{uri: "https://banner2.cleanpng.com/20180705/auy/kisspng-visa-debit-card-credit-card-logo-mastercard-supermercado-5b3daa406f9d67.4063706315307679364572.jpg"}} style={{width: 80, height:60}}/>
+                            <Text style={{color:"#6400ff", fontSize:18, fontWeight:"800"}}> {cardData.Number} </Text>
+                        </View>}
                         <View style={{alignItems: "center", justifyContent:"center"}}>
                             <Text style={{color:"black", fontSize:20,  fontWeight: "800"}}> Balance: </Text>
                             <Text style={{color:"#868686",fontSize:30,  fontWeight: "800"}}> ${cardData.Balance} </Text>
                         </View>
                         <View style={{position: "absolute", height:100, width:200, borderRadius: 10, padding:5, backgroundColor:"#868686", bottom: -50, left:-20, flexDirection:"row"}} >
-                            <Avatar.Image size={50} rounded source={{uri: "https://variety.com/wp-content/uploads/2020/07/huc-ff-000185.jpg"}}  />
+                            <Ionicons name="person-outline" size={50} color="white" />
                             <View style={{marginLeft:20}}>
                                 <Text style={{color: "white", fontSize:10}}>HOLDER</Text>
                                 <Text style={{color: "white", fontSize:16}}>{cardData.fullName}</Text>

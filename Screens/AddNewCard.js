@@ -9,10 +9,18 @@ const AddNewCard = ({navigation}) => {
     let [fName, setFName] = useState("")
     let [Institution, setInstitution] = useState("")
     const [pin, setPin] = useState("")
+    const [card, setCard] = useState("MasterCard")
+    const [viewCards, setViewCards] = useState(true)
+    const chooseProvider =(provider)=>{
+        setCard(provider);
+        setViewCards(false)
+    }
 
     const createCard =() =>{
         const userEmail = auth.currentUser.email;
-        const fiveYears = 1000*3600*24*365*5;
+        var rand = JSON.stringify(Math.random()*1000000000000)
+        const dot = rand.indexOf(".")
+        rand = rand.slice(0, dot)
 
         const user = auth.currentUser;
         const credential = firebase.auth.EmailAuthProvider.credential(user.email, pin);
@@ -21,9 +29,9 @@ const AddNewCard = ({navigation}) => {
                 db.collection("cardOwners").doc(userEmail).collection("cards").add({
                     fullName: fName,
                     Institution: Institution,
-                    Number: "445638829920028",
+                    Number: rand,
                     Balance: 0,
-                    provider: "MasterCard",
+                    provider: card,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp()
                 }).then(()=>{
                     navigation.goBack()
@@ -47,6 +55,18 @@ const AddNewCard = ({navigation}) => {
             <Text style={{color: "#868686", fontSize: 20,marginBottom:40, fontWeight: "bold", textAlign: "center", maxWidth: 300}}>Enter the Individual you would like to get a card for.</Text>
             <KeyboardAvoidingView>
                 <View >
+                    {viewCards && <View style={{flexDirection:"row", marginBottom: 15, justifyContent: "space-around"}} >
+                    <Pressable onPress={()=>{chooseProvider("MasterCard")}} android_ripple style={styles.mcard} >
+                        <Text style={{fontSize: 20, color: "white"}}>
+                        MasterCard
+                        </Text>
+                    </Pressable>
+                    <Pressable onPress={()=>{chooseProvider("Visa")}} android_ripple style={styles.vcard} >
+                        <Text style={{fontSize: 20, color: "white"}}>
+                            Visa
+                        </Text>
+                    </Pressable>
+                    </View>}
                 <TextInput value={fName} onChangeText={(text)=>{setFName(text)}} autoFocus type="text" placeholder="Full Name" style={styles.inputContainer} />
                 <TextInput value={Institution} onChangeText={(text)=>{setInstitution(text)}}  type="text" placeholder="Institution" style={styles.inputContainer} />
                 <TextInput type="password" value={pin} onChangeText={(text)=>{setPin(text)}} secureTextEntry placeholder="Password" label="Enter Your password" style={styles.inputContainer} />
@@ -88,4 +108,26 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         paddingLeft: 50
     },
+    mcard:{
+        color: "white",
+        paddingLeft: 30,
+        paddingRight: 30,
+        height: 50,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#ff6600",
+        borderRadius: 20
+    },
+    vcard:{
+        color: "white",
+        paddingLeft: 30,
+        paddingRight: 30,
+        height: 50,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#6400ff",
+        borderRadius: 20
+    }
 })

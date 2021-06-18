@@ -5,7 +5,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons'; 
 import { Avatar } from 'react-native-paper';
-import { AntDesign } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons';
+import Transfers from './Transfers';
 
 const MainAccountScreen = ({navigation}) => {
 
@@ -28,6 +29,9 @@ const MainAccountScreen = ({navigation}) => {
     const toggleTransfers=()=>{
         setPayments(false); 
         setTransfers(true)
+    }
+    const mTransfer = ()=>{
+        navigation.navigate("transfer")
     }
 
     const item = (title, iconName, iconType) =>{
@@ -93,14 +97,7 @@ const MainAccountScreen = ({navigation}) => {
                     {item("books", "book-outline", "ionicons")}
                 </View>}
                 {
-                    transfers && <ScrollView>
-                        {transfer()}
-                        {transfer()}
-                        {transfer()}
-                        {transfer()}
-                        {transfer()}
-                        {transfer()}
-                    </ScrollView>
+                    transfers && <Transfers toTransfer={mTransfer} navigation={navigation}/>
                 }
             </View>
         </SafeAreaView>

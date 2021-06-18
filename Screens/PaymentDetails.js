@@ -8,8 +8,11 @@ import { AntDesign } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { auth, db } from '../firebase';
+import { useIsFocused } from '@react-navigation/core';
 
 const PaymentDetails = ({navigation, route}) => {
+
+    const isFocused = useIsFocused()
 
     const [paymentHistory, setPaymentHistory] = useState([]);
     useLayoutEffect(() => {
@@ -48,42 +51,40 @@ const PaymentDetails = ({navigation, route}) => {
         navigation.navigate("receipt", history)
     }
 
-    const historyItem = async (history) =>{
-        if(history){var g =  typeof(paymentHistory[0]) =="object" ? Date(history?.data.timestamp.seconds).indexOf("G") : "empty";
+    const historyItem = (history) =>{
+        var g =  typeof(paymentHistory[0]) =="object" ? Date(history?.data.timestamp.seconds).indexOf("G") : "empty";
         var date = typeof(paymentHistory[0]) =="object" ? Date(history?.data.timestamp.seconds).slice(0,g) : "empty";
         
             return(
-                <Text>Hello</Text>
-            //     <Pressable key={history?.id} onPress={()=>toReceipt(history)} style={{width: 300, height: 80, flexDirection: "row", alignItems: "center", justifyContent:"space-between", marginBottom: 20}} >
-            //     <View style={{maxWidth: 200, flexDirection:"row", alignItems:"center"}}>
-            //         <MaterialCommunityIcons name="bank-outline" size={60} color="#ff6600" />
-            //         <View style={{justifyContent: "flex-start", alignItems: "center", marginLeft:10}}>
-            //             <Text style={{color: "black", fontSize:18, fontWeight: "bold", textAlign:"center"}} >
-            //                 {history?.data.bank}
-            //             </Text>
-            //             <Text style={{color: "#868686",fontSize: 14, fontWeight: "bold"}} >
-            //                 KES {history?.data.amount}
-            //             </Text>
-            //             <View style={{flexDirection:"row", justifyContent: "space-between", alignItems:"center"}} >
-            //                 <AntDesign name="calendar" size={24} color="#ff6600" />
-            //                 {/* <Text style={{color: "#6400ff"}}> {date} </Text> */}
-            //             </View>
-            //         </View>
-            //     </View>
-            //     <Feather name="arrow-right" size={24} color="black" />
-            // </Pressable>
-        )        }
+                <Pressable key={history?.id} onPress={()=>toReceipt(history)} style={{width: 300, height: 80, flexDirection: "row", alignItems: "center", justifyContent:"space-between", marginBottom: 20}} >
+                <View style={{maxWidth: 200, flexDirection:"row", alignItems:"center"}}>
+                    <MaterialCommunityIcons name="bank-outline" size={60} color="#ff6600" />
+                    <View style={{justifyContent: "flex-start", alignItems: "center", marginLeft:10}}>
+                        <Text style={{color: "black", fontSize:18, fontWeight: "bold", textAlign:"center"}} >
+                            {history.data.bank}
+                        </Text>
+                        <Text style={{color: "#868686",fontSize: 14, fontWeight: "bold"}} >
+                            KES {history.data.amount}
+                        </Text>
+                        <View style={{flexDirection:"row", justifyContent: "space-between", alignItems:"center"}} >
+                            <AntDesign name="calendar" size={24} color="#ff6600" />
+                            <Text style={{color: "#6400ff"}}> {date} </Text> 
+                        </View>
+                    </View>
+                </View>
+                <Feather name="arrow-right" size={24} color="black" />
+            </Pressable>
+        )   
     }
 
     return (
         <SafeAreaView style={styles.container}> 
+        {isFocused && <View style={styles.container}>
             <Text style={{fontSize: 20, textAlign: "center", color: "gray"}}>History</Text>
             <ScrollView style={{height: 200}}>
                 {paymentHistory.map((history)=>{
                     if(history?.data.category == route.params.title){
-                        return(
-                            historyItem(history)
-                        )
+                        return historyItem(history)
                     }
                 })}
             </ScrollView>
@@ -94,6 +95,7 @@ const PaymentDetails = ({navigation, route}) => {
                         </Text>
                 </Pressable>
             </View>
+            </View>}
         </SafeAreaView >
     )
     }

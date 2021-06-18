@@ -8,6 +8,7 @@ import PaymentDetails from './PaymentDetails';
 import PaymentReceipt from './PaymentReceipt';
 import PaymentScreen from './PaymentScreen';
 import TransferDetails from './TransferDetails';
+import TransferAction from './TransferAction';
 
 
 const Account = () => {
@@ -23,6 +24,7 @@ const Account = () => {
                     <Stack.Screen name="receipt" component={PaymentReceipt}/>
                     <Stack.Screen name="pay" component={PaymentScreen}/>
                     <Stack.Screen name="transferDetails" component={TransferDetails}/>
+                    <Stack.Screen name="transfer" component={TransferAction}/>
                 </Stack.Navigator>
             </NavigationContainer>
     )

@@ -30,6 +30,7 @@ const PaymentScreen = ({navigation, route}) => {
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                     amount: parseInt(amount)
                 }).then(()=>{
+                    navigation.navigate("home")
                     alert(route.params.category +" payment made successfully!")
                 }).catch((e)=>{
                     alert(e)
