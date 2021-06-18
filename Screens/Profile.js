@@ -7,11 +7,11 @@ import * as ImagePicker from 'expo-image-picker';
 import { Avatar } from 'react-native-paper';
 import { auth, storageRef } from '../firebase';
 import firebase from "firebase"
+import {NavigationActions} from "react-navigation"
 
 const Profile = ({navigation}) => {
     const signout = ()=>{
         auth.signOut();
-        navigation.popToTop()
     }
     const [user, setUser] = useState({});
     const [email, setEmail] = useState("");
@@ -107,7 +107,7 @@ const Profile = ({navigation}) => {
                             <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
                                 {!editEmail && <TextInput style={{fontSize:18}} editable={false} value={email}/>}
                                 {editEmail &&  <TextInput style={{fontSize:18}} onChangeText={()=>{setEmail(text)}} editable={true} value={email}/>}
-                                <Pressable onPress={()=>{setEditEmail(!editEmail)}} >
+                                <Pressable android_ripple={{color:"black"}} onPress={()=>{setEditEmail(!editEmail)}} >
                                     <AntDesign name="edit" size={24} color="#ff6600" />
                                 </Pressable>
                             </View>
@@ -119,7 +119,7 @@ const Profile = ({navigation}) => {
                             <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
                                {!editPhone && <TextInput style={{fontSize:18}} editable={false} value={phoneNumber !== null? phoneNumber : "Add"}/>}
                                {editPhone && <TextInput style={{fontSize:18}} editable={true} onChangeText={(text)=>{setPhoneNumber(text)}} value={phoneNumber} />}
-                                <Pressable onPress={()=>{setEditPhone(!editPhone)}} >
+                                <Pressable android_ripple={{color:"black"}} onPress={()=>{setEditPhone(!editPhone)}} >
                                     <AntDesign name="edit" size={24} color="#ff6600" />
                                 </Pressable>
                             </View>
@@ -130,7 +130,7 @@ const Profile = ({navigation}) => {
                             </Text>
                             <View style={{flexDirection:"row", justifyContent:"space-around", alignItems:"center", paddingRight: 10}}>
                                 <TextInput style={{fontSize:18}} secureTextEntry editable={false} value={"mandalorian@starwars.space"}/>
-                                <Pressable onPress={resetPassword} style={{width: 60, padding: 5, backgroundColor: "red", marginRight: 10, borderRadius: 5}}>
+                                <Pressable android_ripple={{color:"white"}} onPress={resetPassword} style={{width: 60, padding: 5, backgroundColor: "red", marginRight: 10, borderRadius: 5}}>
                                     <Text style={{fontSize: 18, color: "white"}}>Reset</Text>
                                 </Pressable>
                             </View>
@@ -138,12 +138,12 @@ const Profile = ({navigation}) => {
                     </View>
                 </View>
             </View>
-                <Pressable onPress={updateUser} android_ripple  style={styles.register} >
+                <Pressable android_ripple={{color:"white"}} onPress={updateUser} style={styles.register} >
                         <Text style={{fontSize: 20, color: "white"}}>
                             Save Changes
                         </Text>
                 </Pressable>
-                <Pressable onPress={()=>{signout()}} android_ripple  style={styles.signOut} >
+                <Pressable android_ripple={{color:"white"}} onPress={()=>{signout()}} android_ripple  style={styles.signOut} >
                         <Text style={{fontSize: 20, color: "white"}}>
                             Sign Out
                         </Text>

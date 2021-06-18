@@ -54,7 +54,7 @@ const Register = ({navigation}) => {
                 </View>
             </KeyboardAvoidingView>
             <View style={{height: 50}}></View>
-            <Pressable android_ripple onPress={register}  style={styles.register} >
+            <Pressable android_ripple={{color:"white"}} onPress={register}  style={styles.register} >
                     <Text style={{fontSize: 20, color: "white"}}>
                         Register
                     </Text>
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
         alignItems: "center", 
         justifyContent: "center",
         marginBottom: 10,
-        paddingLeft: 50
+        paddingLeft: 20
     },
         
 })

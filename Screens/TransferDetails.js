@@ -39,7 +39,7 @@ const TransferDetails = ({navigation, route}) => {
                     <View style={{flexDirection: "row", alignItems:"center", justifyContent: "space-evenly", marginBottom:10}}>
                         <FontAwesome5 name="money-check" size={24} color="#868686" />
                         <Text style={{fontSize:18, fontWeight:"bold", color:"#868686"}} > Amount Transacted: </Text>
-                        <Text style={{fontSize:18, fontWeight:"bold", color:"#6400ff"}}>${data.amount}</Text>
+                        <Text style={{fontSize:18, fontWeight:"bold", color:"#6400ff"}}>KES {data.amount}</Text>
                     </View>
                     <View style={{flexDirection: "row", alignItems:"center", justifyContent: "space-evenly", marginBottom:10}}>
                         <MaterialCommunityIcons name="calendar" size={24} color="#ff6600" />

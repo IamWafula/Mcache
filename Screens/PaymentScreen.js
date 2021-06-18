@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import { KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View, ActivityIndicator } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import firebase from "firebase"
 import { auth, db } from '../firebase'
@@ -12,8 +12,10 @@ const PaymentScreen = ({navigation, route}) => {
     const [studentId, setStudentId] = useState("")
     const [password, setPassword] = useState("")
     const [amount, setAmount] = useState("")
+    const [loading, setLoading] = useState(false)
 
     const pay=()=>{
+        setLoading(true)
         const user = auth.currentUser;
         const credential = firebase.auth.EmailAuthProvider.credential(
             user.email,
@@ -30,7 +32,14 @@ const PaymentScreen = ({navigation, route}) => {
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                     amount: parseInt(amount)
                 }).then(()=>{
+                    setInstitution("")
+                    setBank("")
+                    setAmount("")
+                    setAccountNumber("")
+                    setStudentId("")
+                    setPassword("")
                     navigation.navigate("home")
+                    setLoading(false)
                     alert(route.params.category +" payment made successfully!")
                 }).catch((e)=>{
                     alert(e)
@@ -43,6 +52,8 @@ const PaymentScreen = ({navigation, route}) => {
 
     return ( 
         <SafeAreaView style={{justifyContent: "center", alignItems: "center", height:"100%", backgroundColor: "white"}}>
+            {loading && <ActivityIndicator size="large" color="#ff6600" />}
+            {!loading && <>
             <Text style={{color: "#868686", fontSize: 20, fontWeight: "800", textAlign: "center", marginBottom:20}} >Make Payments With Ease</Text>
             <KeyboardAvoidingView>
                 <View >
@@ -55,11 +66,12 @@ const PaymentScreen = ({navigation, route}) => {
                 </View>
             </KeyboardAvoidingView>
             <View style={{height: 50}}></View>
-            <Pressable onPress={pay} android_ripple  style={styles.pay} >
+            <Pressable onPress={pay} android_ripple={{color: "white"}}  style={styles.pay} >
                     <Text style={{fontSize: 20, color: "white"}}>
                         Pay
                     </Text>
             </Pressable>
+            </>}
         </SafeAreaView>
     )
 }

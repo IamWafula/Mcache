@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { StyleSheet, Text, View, Image } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
@@ -6,11 +6,25 @@ import HomeTab from './HomeTab';
 import Account from './Account';
 import Profile from './Profile';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
+import {auth } from "../firebase"
+import {NavigationActions} from "react-navigation"
 
-const AccountScreen = () => {
+const AccountScreen = ({navigation}) => {
     const changeScreen = (screenName) =>{
-        navigation.navigate(screenName) 
+        navigation.reset({
+            index: 0,
+            routes: [{ name: screenName }],
+          });
     }
+
+    auth.onAuthStateChanged((authUser)=>{
+        if(!authUser){
+            navigation.navigate("Welcome")
+        }
+    })
+
+
+
 
     const Tab = createBottomTabNavigator();
     return (

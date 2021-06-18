@@ -14,18 +14,18 @@ import TransferAction from './TransferAction';
 const Account = () => {
     
 
-    const Stack = createStackNavigator()
+    const TopStack = createStackNavigator()
     return (
             <NavigationContainer independent={true} >
-                <Stack.Navigator >
+                <TopStack.Navigator >
                    
-                    <Stack.Screen name="home" component={MainAccountScreen} options={{headerShown: false}} />
-                    <Stack.Screen name="payment" component={PaymentDetails}/>
-                    <Stack.Screen name="receipt" component={PaymentReceipt}/>
-                    <Stack.Screen name="pay" component={PaymentScreen}/>
-                    <Stack.Screen name="transferDetails" component={TransferDetails}/>
-                    <Stack.Screen name="transfer" component={TransferAction}/>
-                </Stack.Navigator>
+                    <TopStack.Screen name="home" component={MainAccountScreen} options={{headerShown: false}} />
+                    <TopStack.Screen name="payment" component={PaymentDetails}/>
+                    <TopStack.Screen name="receipt" component={PaymentReceipt}/>
+                    <TopStack.Screen name="pay" component={PaymentScreen}/>
+                    <TopStack.Screen name="transferDetails" component={TransferDetails}/>
+                    <TopStack.Screen name="transfer" component={TransferAction}/>
+                </TopStack.Navigator>
             </NavigationContainer>
     )
 }

@@ -22,7 +22,7 @@ const Transfers = ({toTransfer, navigation}) => {
         var date = typeof(transfers[0]) =="object" ? Date(history?.data.timestamp.seconds).slice(0,g) : "empty";
         
             return(
-                <Pressable key={history?.id} onPress={()=>toReceipt(history)} style={{width: 300, height: 80, flexDirection: "row", alignItems: "center", justifyContent:"space-between", marginBottom: 20}} >
+                <Pressable android_ripple={{color:"#ff6600"}} key={history?.id} onPress={()=>toReceipt(history)} style={{width: 300, height: 80, flexDirection: "row", alignItems: "center", justifyContent:"space-between", marginBottom: 20}} >
                 <View style={{maxWidth: 200, flexDirection:"row", alignItems:"center"}}>
                 <MaterialCommunityIcons name="bank-transfer" size={60} color="#ff6600" />
                     <View style={{justifyContent: "flex-start", alignItems: "center", marginLeft:10}}>
@@ -77,7 +77,7 @@ const Transfers = ({toTransfer, navigation}) => {
                 })}
             </ScrollView>
             <View style={{flexDirection:"row", marginBottom: 30, alignItems:"center",justifyContent: "space-around"}} >
-            <Pressable onPress={()=>{toTransfer()}} android_ripple={true}  style={styles.register} >
+            <Pressable android_ripple={{color:"white"}}    onPress={()=>{toTransfer()}} android_ripple={true}  style={styles.register} >
                         <Text style={{fontSize: 20, color: "white"}}>
                             Transfer Funds
                         </Text>

@@ -40,7 +40,7 @@ const LogIn = ({navigation}) => {
                 </View>
             </KeyboardAvoidingView>
             <View style={{height: 50}}></View>
-            <Pressable android_ripple onPress={signIn} style={styles.signIn} >
+            <Pressable android_ripple={{color:"white"}} onPress={signIn} style={styles.signIn} >
                     <Text style={{fontSize: 20, color: "white"}}>
                         Log In
                     </Text>
@@ -91,6 +91,6 @@ const styles = StyleSheet.create({
         alignItems: "center", 
         justifyContent: "center",
         marginBottom: 10,
-        paddingLeft: 50
+        paddingLeft: 20
     },
 })

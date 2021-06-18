@@ -1,15 +1,18 @@
-import React, { useEffect } from 'react'
-import { SafeAreaView, StyleSheet, Text, View, Image, Pressable, TouchableOpacity, Button, TextInput } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { SafeAreaView, StyleSheet, Text, View, Image, Pressable, TouchableOpacity, Button, TextInput, ActivityIndicator } from 'react-native'
 import { useFonts, Staatliches_400Regular } from '@expo-google-fonts/staatliches';
 import AppLoading from 'expo-app-loading';
 import { auth } from '../firebase';
 
 const Welcome = ({navigation}) => {
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((authUser)=>{
             if(authUser){
                 navigation.replace("AccountScreen")
+            }else{
+                setLoading(false)
             }
         })
         return unsubscribe;
@@ -25,25 +28,28 @@ const Welcome = ({navigation}) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Image style={styles.logo} source={require("../assets/icon.png")} />
-            <View style={styles.textHolder}>
-                <Text style={{textAlign: "center", color: "#ff6600", marginBottom: 20, fontSize: 30 }}>Welcome</Text>
-                <Text style={styles.otherText} >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                </Text>
-            </View>
-            <View style={styles.buttonHolder}>
-                <Pressable android_ripple onPress={()=>navigation.navigate("LogIn")}  style={styles.signIn} >
-                    <Text style={{fontSize: 20, color: "white"}}>
-                        Log In
+            {loading && <ActivityIndicator  visibility={loading} textContent={"loading..."} textStyle={{color:"#ff6600"}} size="large" color="#ff6600" />}
+            {!loading && <>
+                <Image style={styles.logo} source={require("../assets/icon.png")} />
+                <View style={styles.textHolder}>
+                    <Text style={{textAlign: "center", color: "#ff6600", marginBottom: 20, fontSize: 30 }}>Welcome</Text>
+                    <Text style={styles.otherText} >
+                        Pay with ease
                     </Text>
-                </Pressable>
-                <Pressable android_ripple onPress={()=>navigation.navigate("Register")}  style={styles.register} >
-                    <Text style={{fontSize: 20, color: "white"}}>
-                        Register
-                    </Text>
-                </Pressable>
-            </View>
+                </View>
+                <View style={styles.buttonHolder}>
+                    <Pressable android_ripple={{color: "white"}} onPress={()=>navigation.navigate("LogIn")}  style={styles.signIn} >
+                        <Text style={{fontSize: 20, color: "white"}}>
+                            Log In
+                        </Text>
+                    </Pressable>
+                    <Pressable android_ripple={{color:"white"}} onPress={()=>navigation.navigate("Register")}  style={styles.register} >
+                        <Text style={{fontSize: 20, color: "white"}}>
+                            Register
+                        </Text>
+                    </Pressable>
+                </View>
+            </>}
         </SafeAreaView>
     )
 }
@@ -72,7 +78,8 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     otherText:{
-        fontSize: 24
+        fontSize: 24,
+        textAlign: "center"
     },
     buttonHolder:{
 

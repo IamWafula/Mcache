@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { KeyboardAvoidingView, Pressable, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native'
+import { KeyboardAvoidingView, Pressable, SafeAreaView, StyleSheet, Text, TextInput, View, ActivityIndicator } from 'react-native'
 import { auth, db } from '../firebase';
 import firebase from "firebase"
 
@@ -8,8 +8,10 @@ const TransferAction = ({navigation}) => {
     const [email, setEmail ] = useState("");
     const [amount, setAmount] = useState("");
     const [password, setPassword] = useState("")
-
+    const [loading, setLoading] = useState(false)
+ 
     const makeTransfer = ()=>{
+        setLoading(true)
         const user = auth.currentUser;
         const credential = firebase.auth.EmailAuthProvider.credential(user.email, password);
         user.reauthenticateWithCredential(credential).then((authUser)=>{
@@ -23,6 +25,7 @@ const TransferAction = ({navigation}) => {
                     setPassword("")
                     setAmount("")
                     alert("transaction successfully made🎉")
+                    setLoading(false)
                 })
             }else{
                 alert("Invalid password provided")
@@ -32,6 +35,8 @@ const TransferAction = ({navigation}) => {
 
     return (
         <SafeAreaView style={{justifyContent: "center", alignItems: "center", height:"100%", backgroundColor: "white"}}>
+            {loading && <ActivityIndicator size="large" color="#ff6600" />}
+            {!loading && <>
             <Text style={{color: "#868686", fontSize: 20, fontWeight: "800", textAlign: "center", marginBottom:20}} >Make Payments With Ease</Text>
             <KeyboardAvoidingView>
                 <View >
@@ -46,6 +51,7 @@ const TransferAction = ({navigation}) => {
                         Make Transfer
                     </Text>
             </Pressable>
+            </>}
         </SafeAreaView>
     )
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import { ActivityIndicator, KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { auth, db } from '../firebase'
 import firebase from "firebase"
@@ -8,6 +8,7 @@ const AddNewCard = ({navigation}) => {
 
     let [fName, setFName] = useState("")
     let [Institution, setInstitution] = useState("")
+    const [loading,setLoading] = useState(false)
     const [pin, setPin] = useState("")
     const [card, setCard] = useState("MasterCard")
     const [viewCards, setViewCards] = useState(true)
@@ -17,6 +18,7 @@ const AddNewCard = ({navigation}) => {
     }
 
     const createCard =() =>{
+        setLoading(true)
         const userEmail = auth.currentUser.email;
         var rand = JSON.stringify(Math.random()*1000000000000)
         const dot = rand.indexOf(".")
@@ -35,6 +37,7 @@ const AddNewCard = ({navigation}) => {
                     timestamp: firebase.firestore.FieldValue.serverTimestamp()
                 }).then(()=>{
                     navigation.goBack()
+                    setLoading(false)
                     alert("Card created successfully")
                 }).catch((e)=>{
                     alert(e.message)
@@ -52,16 +55,18 @@ const AddNewCard = ({navigation}) => {
 
     return (
         <SafeAreaView style={{justifyContent: "center", alignItems: "center", height:"100%", backgroundColor: "white"}}>
+            {loading && <ActivityIndicator color="#ff6600" size="large" />}
+            {!loading &&  <>
             <Text style={{color: "#868686", fontSize: 20,marginBottom:40, fontWeight: "bold", textAlign: "center", maxWidth: 300}}>Enter the Individual you would like to get a card for.</Text>
             <KeyboardAvoidingView>
                 <View >
                     {viewCards && <View style={{flexDirection:"row", marginBottom: 15, justifyContent: "space-around"}} >
-                    <Pressable onPress={()=>{chooseProvider("MasterCard")}} android_ripple style={styles.mcard} >
+                    <Pressable onPress={()=>{chooseProvider("MasterCard")}} android_ripple={{color: "white"}} style={styles.mcard} >
                         <Text style={{fontSize: 20, color: "white"}}>
                         MasterCard
                         </Text>
                     </Pressable>
-                    <Pressable onPress={()=>{chooseProvider("Visa")}} android_ripple style={styles.vcard} >
+                    <Pressable onPress={()=>{chooseProvider("Visa")}} android_ripple={{color:"white"}} style={styles.vcard} >
                         <Text style={{fontSize: 20, color: "white"}}>
                             Visa
                         </Text>
@@ -77,6 +82,7 @@ const AddNewCard = ({navigation}) => {
                         Create New Card
                     </Text>
             </Pressable>
+            </>}
         </SafeAreaView>
     )
 }

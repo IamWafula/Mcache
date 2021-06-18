@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import { KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View, ActivityIndicator } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { auth, db } from '../firebase'
 import firebase from "firebase"
@@ -7,8 +7,9 @@ import firebase from "firebase"
 const AddToCard = ({navigation, route}) => {
     const [amount, setAmount] = useState("0")
     const [password, setPassword] = useState("")
-    const addToCard = () =>{
-
+    const [loading, setLoading] =useState(false)
+     const addToCard = () =>{
+        setLoading(true)
         const user = auth.currentUser
         const credential = firebase.auth.EmailAuthProvider.credential(
             user.email,
@@ -29,6 +30,7 @@ const AddToCard = ({navigation, route}) => {
                     timestamp: firebase.firestore.FieldValue.serverTimestamp()
                 }).then(()=>{
                     navigation.goBack()
+                    setLoading(false)
                 }).catch((e)=>{
                     alert(e)
                 })
@@ -41,6 +43,9 @@ const AddToCard = ({navigation, route}) => {
     }
     return ( 
         <SafeAreaView style={{justifyContent: "center", alignItems: "center", height:"100%", backgroundColor: "white"}}>
+            {loading && <ActivityIndicator size="large" color="#ff6600" />}
+            {!loading && <>
+
             <Text style={{color: "#868686", fontSize: 20,marginBottom:40, fontWeight: "bold", textAlign: "center", maxWidth: 300}}>Enter The Amount You wish to Add</Text>
             <KeyboardAvoidingView>
                 <View >
@@ -54,6 +59,7 @@ const AddToCard = ({navigation, route}) => {
                         Add
                     </Text>
             </Pressable>
+            </>}
         </SafeAreaView>
     )
 }

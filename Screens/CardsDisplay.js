@@ -84,7 +84,7 @@ const CardsDisplay = ({navigation, route}) => {
                     {/* <View style={styles.dataRow}>
                         <Text style={{fontSize: 12, fontWeight: "bold", color:"red"}}>Created On:</Text>
                         <Text style={{fontSize: 12, fontWeight: "bold", color:"red"}}> {toString(route.params.timestamp)}  </Text>
-                    </View> */}
+                    </View> */} 
                 </View>
             </View>
             <View style={{height: 300}} >
@@ -108,7 +108,7 @@ const CardsDisplay = ({navigation, route}) => {
                 }
             </ScrollView>
             </View>
-            <Pressable android_ripple onPress={()=>navigation.navigate("deposit", {cardNumber: route.params.card.Number, Id: route.params.id})} style={styles.pay} >
+            <Pressable android_ripple={{color: "white"}} onPress={()=>navigation.navigate("deposit", {cardNumber: route.params.card.Number, Id: route.params.id})} style={styles.pay} >
                     <Text style={{fontSize: 20, color: "white"}}>
                         Add To Card
                     </Text>

@@ -36,7 +36,7 @@ const MainAccountScreen = ({navigation}) => {
 
     const item = (title, iconName, iconType) =>{
         return(
-            <Pressable onPress={()=>{toPayment(title)}}  style={{borderRadius: 20,paddingRight: 10, paddingLeft:10, borderWidth: 2, borderColor:"#868686",width: 300, height:50, flexDirection: "row", alignItems:"center", justifyContent: "space-between", marginBottom:30}}>
+            <Pressable android_ripple={{color: "#ff6600"}} onPress={()=>{toPayment(title)}}  style={{borderRadius: 20,paddingRight: 10, paddingLeft:10, borderWidth: 2, borderColor:"#868686",width: 300, height:50, flexDirection: "row", alignItems:"center", justifyContent: "space-between", marginBottom:30}}>
                 {iconType === "ionicons" && <Ionicons name={iconName} size={20} color="#ff6600" />}
                 {iconType === "FontAwesome5" && <FontAwesome5 name={iconName} size={20} color="#ff6600" />}
                     <View style={{width: 200, flexDirection: "row", alignItems: "center", justifyContent:"space-between"}}>
